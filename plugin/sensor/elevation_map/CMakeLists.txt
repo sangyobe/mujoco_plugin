@@ -19,24 +19,24 @@ set(MUJOCO_SENSOR_INCLUDE
 
 set(MUJOCO_SENSOR_SRCS
     sensor.cc
-    touch_grid.h
-    touch_grid.cc
+    elevation_map.h
+    elevation_map.cc
 )
 
-add_library(touch_grid SHARED)
-target_sources(touch_grid PRIVATE ${MUJOCO_SENSOR_SRCS})
-target_include_directories(touch_grid PRIVATE ${MUJOCO_SENSOR_INCLUDE})
-target_link_libraries(touch_grid PRIVATE mujoco::mujoco)
+add_library(elevation_map SHARED)
+target_sources(elevation_map PRIVATE ${MUJOCO_SENSOR_SRCS})
+target_include_directories(elevation_map PRIVATE ${MUJOCO_SENSOR_INCLUDE})
+target_link_libraries(elevation_map PRIVATE mujoco::mujoco)
 target_compile_options(
-  touch_grid
-  PRIVATE ${AVX_COMPILE_OPTIONS}
-          ${MUJOCO_MACOS_COMPILE_OPTIONS}
-          ${EXTRA_COMPILE_OPTIONS}
-          ${MUJOCO_CXX_FLAGS}
+    elevation_map
+    PRIVATE ${AVX_COMPILE_OPTIONS}
+    ${MUJOCO_MACOS_COMPILE_OPTIONS}
+    ${EXTRA_COMPILE_OPTIONS}
+    ${MUJOCO_CXX_FLAGS}
 )
 target_link_options(
-  touch_grid
-  PRIVATE
-  ${MUJOCO_MACOS_LINK_OPTIONS}
-  ${EXTRA_LINK_OPTIONS}
+    elevation_map
+    PRIVATE
+    ${MUJOCO_MACOS_LINK_OPTIONS}
+    ${EXTRA_LINK_OPTIONS}
 )

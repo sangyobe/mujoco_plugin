@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.16...3.25)
 
 # Cmake Policies
-# set(CMAKE_POLICY_DEFAULT_CMP0002 NEW)
+cmake_policy(SET CMP0144 OLD)
 
 # Project Definition
 project(
@@ -61,13 +61,15 @@ list(APPEND CMAKE_PREFIX_PATH "${ARTF_INSTALL_DIR}")
 # Project Options
 option(BUILD_SENSOR_PLUGIN "Build sensor plugins for ${PROJECT_NAME}" ON)
 
-# Project Dependencies
+# Project Dependenciesc
 find_package(artf CONFIG REQUIRED)
 
 # --------------------------------------------------------
 # BUILD SECTION
 # --------------------------------------------------------
-add_subdirectory(plugin/sensor/touch_grid)
+if(BUILD_SENSOR_PLUGIN)
+    add_subdirectory(plugin/sensor)
+endif()
 
 # --------------------------------------------------------
 # DEPLOY SECTION

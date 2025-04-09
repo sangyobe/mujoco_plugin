@@ -1,0 +1,52 @@
+<mujoco model="elevation_map_test">
+  <compiler autolimits="true"/>
+
+  <extension>
+    <plugin plugin="mujoco.sensor.elevation_map"/>
+  </extension>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".1 .2 .3" rgb2=".2 .3 .4" width="300" height="300" mark="edge" markrgb=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="3 1" texuniform="true"/>
+    <hfield file="a.png" size="0.2 0.2 0.02 0.015"/>
+  </asset>
+
+  <visual>
+      <headlight ambient=".7 .7 .7" diffuse=".2 .2 .2" specular="0.1 0.1 0.1"/>
+      <map znear="0.01"/>
+      <scale contactwidth=".02" contactheight=".5"/>
+  </visual>
+
+  <default>
+    <geom friction="0.4" solimp="0 0.95 0.02"/>
+  </default>
+
+  <statistic center="0 0 1" extent="1" meansize=".1"/>
+
+  <worldbody>
+    <light pos="1 0 .3" dir="-1 0 -.3"/>
+    <light pos="-1 0 .3" dir="1 0 -.3"/>
+    <geom name="floor" pos="0 0 -0.01" type="plane" size="2 2 .01"/>
+
+    <geom name="a" type="hfield" hfield="a" rgba=".5 .5 .7 1"/>
+
+    <body name="ball" pos="0 0 0.5">
+      <joint name="x" type="slide" axis="1 0 0" damping="1"/>
+      <joint name="y" type="slide" axis="0 1 0" damping="1"/>
+      <!-- <joint name="z" type="slide" axis="0 0 1"/> -->
+      <!-- <joint name="rx" axis="1 0 0" springdamper="0.2 1"/>
+      <joint name="ry" axis="0 1 0" springdamper="0.2 1"/> -->
+      <geom type="ellipsoid" size=".3 .5 .1" mass="0.1" rgba=".5 .5 .5 .3" group="1" />
+      <site name="elevation_map" pos="0 0 0"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <plugin name="elevation_map" plugin="mujoco.sensor.elevation_map" objtype="site" objname="elevation_map">
+      <config key="dim" value="120 120"/>
+      <config key="res" value="0.03"/>
+      <config key="max_height" value="5.0"/>
+      <config key="skip_count" value="100"/>
+    </plugin>
+  </sensor>
+</mujoco>
